@@ -130,6 +130,11 @@ func (h loggingHandler) writeLogLine(username, upstream string, req *http.Reques
 		}
 	}
 
+	// maasdigital: don't log /ping hits
+	if url.RequestURI() == "/ping" {
+		return
+	}
+
 	client := req.Header.Get("X-Real-IP")
 	if client == "" {
 		client = req.RemoteAddr
